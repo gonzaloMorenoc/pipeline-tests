@@ -1,0 +1,11 @@
+stages:
+    - test
+
+newman_tests:
+    stage: test
+    image:
+        name: postman/newman_alpine33
+        entrypoint: [""]
+    script:
+        - newman --version
+        - newman run .tests/POC_API.postman_collection.json -e .tests/poc.postman_environment.json -r cli,htmlextra --reporter-htmlextra --reporter-htmlextra-export reportsHtml\reporte_prueba.html

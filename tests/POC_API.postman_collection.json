@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "6b5d9871-1677-4eb8-84ae-453b16bd0995",
+		"name": "POC_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /Userss",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db9d59d3-6d05-45e4-8e70-3c5e00abdc3f",
+						"exec": [
+							"pm.test(\"response is ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"tests[\"Response time is less than 500ms\"] = responseTime < 500;\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"userName\", jsonData[0].UserName);\r",
+							"postman.setEnvironmentVariable(\"userID\", jsonData[0].ID);\r",
+							"\r",
+							"console.log(\"userName: \" + jsonData[0].UserName);\r",
+							"console.log(\"userID: \" + jsonData[0].ID);\r",
+							"\r",
+							"pm.test('Parameters response json is ok', function() {\r",
+							"  pm.expect(jsonData[0]).to.have.property('ID');\r",
+							"  pm.expect(jsonData[0]).to.have.property('UserName');\r",
+							"  pm.expect(jsonData[0]).to.have.property('Password');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base}}/api/Users",
+					"protocol": "http",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /Users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "21e58111-be0f-43bc-9a94-a483e2671c17",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "033bdafa-85e2-4962-b961-ad5aae73bbcd",
+						"exec": [
+							"pm.test(\"response is ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"tests[\"Response time is less than 500ms\"] = responseTime < 500;\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"UserID\", jsonData.ID);\r",
+							"\r",
+							"var userID = jsonData.ID;\r",
+							"var UserName = jsonData.UserName;\r",
+							"var Password = jsonData.Password;\r",
+							"\r",
+							"console.log(\"El userId del POST es: \" + userID);\r",
+							"console.log(\"El UserName del POST es: \" + UserName);\r",
+							"console.log(\"La Password del POST es: \" + Password);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ID\": 0,\r\n  \"UserName\": \"Pepito\",\r\n  \"Password\": \"123456\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{base}}/api/Users",
+					"protocol": "http",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /Users/{{id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db9d59d3-6d05-45e4-8e70-3c5e00abdc3f",
+						"exec": [
+							"pm.test(\"response is ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"tests[\"Response time is less than 500ms\"] = responseTime < 500;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base}}/api/Users/1",
+					"protocol": "http",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - '10'
+
+install:
+  - npm install newman
+
+before_script:
+  - node --version
+  - npm --version
+  - node_modules/.bin/newman --version
+
+script:
+  - node_modules/.bin/newman run tests/POC_API.postman_collection.json -e tests/poc.postman_environment.json -r cli,htmlextra --reporter-htmlextra --reporter-htmlextra-export reportsHtml\reporte_prueba.html --color auto --disable-unicode 
